@@ -48,7 +48,7 @@ animations = [{
 radius = 42.0
 height = 96.0
 
-[node name="Enemy" type="RigidBody2D"]
+[node name="Enemy" type="RigidBody2D" groups=["enemy_group"]]
 collision_layer = 2
 gravity_scale = 0.0
 script = ExtResource("1_ninsj")

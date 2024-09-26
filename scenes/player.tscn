@@ -47,4 +47,4 @@ animation = &"walk"
 position = Vector2(1, -13)
 shape = SubResource("CircleShape2D_rfxdr")
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

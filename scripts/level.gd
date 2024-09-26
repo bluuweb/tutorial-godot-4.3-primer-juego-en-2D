@@ -3,8 +3,12 @@ extends Node
 @export var enemy_scene: PackedScene
 @onready var path_follow_2d: PathFollow2D = $Path2D/PathFollow2D
 
+var score
+
 func _ready() -> void:
-	new_game()
+	#new_game()
+	$Player.connect("hit", game_over)
+	$HUB.connect("start_game", new_game)
 
 func _on_timer_timeout() -> void:
 	var enemy = enemy_scene.instantiate()
@@ -20,4 +24,24 @@ func _on_timer_timeout() -> void:
 	add_child(enemy)
 
 func new_game():
-	$Player.position = $Marker2D.position
+	#$Player.position = $Marker2D.position
+	$Player.start($Marker2D.position)
+	score = 0
+	$TimerStart.start()
+	$HUB.show_message("Get Ready")
+	$HUB.update_score(score)
+	get_tree().call_group("enemy_group", "queue_free")
+	
+func game_over():
+	print('game over')
+	$TimerScore.stop()
+	$TimerEnemy.stop()
+	$HUB.show_game_over()
+
+func _on_timer_score_timeout() -> void:
+	score += 1
+	$HUB.update_score(score)
+
+func _on_timer_start_timeout() -> void:
+	$TimerEnemy.start()
+	$TimerScore.start()

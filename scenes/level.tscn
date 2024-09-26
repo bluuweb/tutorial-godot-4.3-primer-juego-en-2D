@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://81nma8uribfl"]
+[gd_scene load_steps=6 format=3 uid="uid://81nma8uribfl"]
 
 [ext_resource type="PackedScene" uid="uid://cgpbvtud435wi" path="res://scenes/player.tscn" id="1_hr7l5"]
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_lbcla"]
 [ext_resource type="PackedScene" uid="uid://b6cofrwh4n5p3" path="res://scenes/enemy.tscn" id="2_qeb8r"]
+[ext_resource type="PackedScene" uid="uid://dlkr0qyjbqr6m" path="res://scenes/hub.tscn" id="4_wo3ru"]
 
 [sub_resource type="Curve2D" id="Curve2D_1ajvi"]
 _data = {
@@ -16,9 +17,6 @@ enemy_scene = ExtResource("2_qeb8r")
 
 [node name="Player" parent="." instance=ExtResource("1_hr7l5")]
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(240, 360)
 
@@ -26,8 +24,20 @@ position = Vector2(240, 360)
 curve = SubResource("Curve2D_1ajvi")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(-6.45407, 520.104)
+position = Vector2(-6.45408, 520.108)
 rotation = -1.568
 progress = 1881.93
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="TimerScore" type="Timer" parent="."]
+
+[node name="TimerEnemy" type="Timer" parent="."]
+
+[node name="HUB" parent="." instance=ExtResource("4_wo3ru")]
+
+[node name="TimerStart" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="TimerScore" to="." method="_on_timer_score_timeout"]
+[connection signal="timeout" from="TimerEnemy" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="TimerStart" to="." method="_on_timer_start_timeout"]
