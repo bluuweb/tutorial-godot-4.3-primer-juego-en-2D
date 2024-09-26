@@ -2,6 +2,9 @@ extends CanvasLayer
 
 signal start_game
 
+func _ready() -> void:
+	$ButtonStart.grab_focus()
+
 func _on_button_start_pressed() -> void:
 	$ButtonStart.hide()
 	start_game.emit()
@@ -23,6 +26,7 @@ func show_game_over():
 	
 	await get_tree().create_timer(1.0).timeout
 	$ButtonStart.show()
+	$ButtonStart.grab_focus()
 	
 
 func _on_timer_timeout() -> void:

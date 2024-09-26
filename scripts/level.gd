@@ -31,12 +31,15 @@ func new_game():
 	$HUB.show_message("Get Ready")
 	$HUB.update_score(score)
 	get_tree().call_group("enemy_group", "queue_free")
+	$Music.play()
 	
 func game_over():
 	print('game over')
 	$TimerScore.stop()
 	$TimerEnemy.stop()
 	$HUB.show_game_over()
+	$Music.stop()
+	$GameOver.play()
 
 func _on_timer_score_timeout() -> void:
 	score += 1
